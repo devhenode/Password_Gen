@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="index.css">
+
+  <title>Document</title>
+</head>
+<body>
+
+  <nav>
+    <button><a href="/public/api/register.html">Register</a></button>
+  </nav>
+  
+  <div class="card"> 
+    <h1>Generate a <br><span>random Password</span></h1>
+    <p>Never use an insecure password again</p>
+  
+    <button id="generate">
+      Generate passwords
+    </button>
+  
+    <div class="btn-space">
+      <button id="password1" onclick="copyText()"></button>
+      <button id="password2" onclick="copyText()"></button>
+    </div>
+
+    <div>
+      <button id="savelocal">Save Password</button>
+    </div>
+
+    <div>
+      <label for="">Select Password length</label>
+      <select id="selector" onchange="selected()">
+        <option value="">6</option>
+        <option value="">8</option>
+        <option value="">10</option>
+        <option value="">12</option>
+        <option value="">14</option>
+        <option value="">16</option>
+        <option value="">18</option>
+      </select>
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+
+  <script>
+    const characters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W",
+  "X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y",
+  "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9","~","`","!","@","#","$","%","^","&","*","(",")","_","-","+","=",
+  "{","[","}","]",",","|",":",";","<",">",".","?","/"
+];
+
+  setInterval(function(){
+    window.location.reload();
+    window.stop();
+  },100);
+
+
+let generate = document.getElementById('generate');
+let btnOne = document.getElementById('password1');
+let btnTwo = document.getElementById('password2');
+
+var length_Of_Password;
+
+const selected = () => {
+  let getOpt = document.getElementById("selector");
+  let getIndex = getOpt.selectedIndex;
+  length_Of_Password = getOpt.options[getIndex].text;
+  
+  console.log("You just selected " + length_Of_Password);
+}
+
+generate.addEventListener("click", function() {
+  console.log("Hello world");
+  let result = '';
+  let count = '';
+  
+  for (let i = 0; i < length_Of_Password; i++) {
+    result += characters[Math.floor(Math.random() * characters.length)];
+    count += characters[Math.floor(Math.random() * characters.length)];
+    // console.log(result);     
+    // console.log(result)
+               
+  }
+
+  btnOne.textContent = result;
+  btnTwo.textContent = count;
+
+
+});
+
+const copyText = async () => {
+  let hashText = document.getElementById('password1').innerHTML;
+  try {
+    await navigator.clipboard.writeText(hashText);
+    alert(`${hashText} copied to clipboard`)
+  } catch (err) {
+    console.error("Failed to copy: ", err)
+  }
+}
+
+
+// Saving Password locally
+document.getElementById('savelocal').addEventListener('click', async () => {
+  const password = document.getElementById('password1').value;
+  if(password) {
+    let passwords = JSON.parse(localStorage.getItem('passwords')) || [];
+    passwords.push(password);
+    localStorage.setItem('passwords', JSON.stringify(passwords));
+    displayPasswords();
+  }
+
+  console.log(passwords)
+});
+
+// function saveLocally(genedPassword) {
+//   const password = document.getElementById('password1').value;
+//   if (password)
+// }
+
+
+
+  </script>
+</body>
+</html>

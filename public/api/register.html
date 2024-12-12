@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link href="./output.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <form id="register" action="./register.html" method="POST">
+    <div class="flex bg-green-800 h-64 items-center px-4">
+      <div>
+        <a href="javascript: history.go(-1)">
+          <svg class="absolute top-0 my-3" xmlns="http://www.w3.org/2000/svg" height="22" width="20.5" viewBox="0 0 448 512"><path fill="#fff" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+        </a>
+        <div >
+          <h3 class="text-white mt-28 font-bold text-3xl">Register account</h3>
+          <p class="text-gray-200">Create your account</p>
+
+        </div>
+
+      </div>
+      
+    </div> 
+
+    <div class="my-16 space-y-8">
+      <div class="mx-5">
+      <label for="username" class="block text-md font-medium leading-6 text-gray-900">Username</label>
+      <div class="relative mt-2 rounded-md shadow-sm">
+        <input type="text" name="username" id="username" class="block w-full rounded-md border-0 py-3 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Username">
+      </div>
+
+      </div>
+      <div class=" mx-5">
+        <label for="username" class="block text-md font-medium leading-6 text-gray-900">Email</label>
+        <div class="relative mt-2 rounded-md shadow-sm">
+          <input type="text" name="email" id="email" class="block w-full rounded-md border-0 py-3 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Email">
+        </div>
+
+      </div>
+
+      <div class="mx-5">
+
+        <label for="username" class="block text-md font-medium leading-6 text-gray-900">Password</label>
+        <div class="relative mt-2 rounded-md shadow-sm">
+          <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288 80c-65.2 0-118.8 29.6-159.9 67.7C89.6 183.5 63 226 49.4 256c13.6 30 40.2 72.5 78.6 108.3C169.2 402.4 222.8 432 288 432s118.8-29.6 159.9-67.7C486.4 328.5 513 286 526.6 256c-13.6-30-40.2-72.5-78.6-108.3C406.8 109.6 353.2 80 288 80zM95.4 112.6C142.5 68.8 207.2 32 288 32s145.5 36.8 192.6 80.6c46.8 43.5 78.1 95.4 93 131.1c3.3 7.9 3.3 16.7 0 24.6c-14.9 35.7-46.2 87.7-93 131.1C433.5 443.2 368.8 480 288 480s-145.5-36.8-192.6-80.6C48.6 356 17.3 304 2.5 268.3c-3.3-7.9-3.3-16.7 0-24.6C17.3 208 48.6 156 95.4 112.6zM288 336c44.2 0 80-35.8 80-80s-35.8-80-80-80c-.7 0-1.3 0-2 0c1.3 5.1 2 10.5 2 16c0 35.3-28.7 64-64 64c-5.5 0-10.9-.7-16-2c0 .7 0 1.3 0 2c0 44.2 35.8 80 80 80zm0-208a128 128 0 1 1 0 256 128 128 0 1 1 0-256z"/></svg>
+          </div>
+        <div class="relative mt-2 rounded-md shadow-sm">
+          <input type="password" name="password" id="password" class="block w-full rounded-md border-0 py-3 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Password">
+        </div>
+
+        <div class="my-7 flex">
+          <button type="submit" class="text-center w-full text-xl bg-lime-200 px-14 py-3 mx-auto font-mono font-extrabold rounded-lg">Register</button>
+        </div>
+      </div>
+
+
+      <p>I have an account? <a href="./login.html">Login</a></p>
+
+      <div id="message" style="display: none;"></div>
+
+    </div>
+    
+  </form>
+
+  <script src="/app.js"></script>
+  <script>
+      // Handle registration forms
+      document.getElementById('register').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+          const response = await fetch('/api/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, email, password })
+          })
+          .then(response => response.text())  // Get response as plain text
+          .then(data => {
+            console.log(data);  // Check if it's an HTML error page or JSON
+          })
+          .catch(error => console.error('Error:', error));
+
+
+          const data = await response.json();
+
+          if (response.ok) {
+          messageDiv.textContent = "Signup successful!";
+          messageDiv.style.color = 'green';
+          messageDiv.style.display = 'block'; // Show success message
+        } else {
+          messageDiv.textContent = "Signup failed. Please try again.";
+          messageDiv.style.color = 'red';
+          messageDiv.style.display = 'block'; // Show error message
+        }
+      } catch (error) {
+        messageDiv.textContent = `Error: ${error.message}`;
+        messageDiv.style.color = 'red';
+        messageDiv.style.display = 'block'; // Show error message
+      }
+    });    
+
+  </script>
+</body>
+</html>

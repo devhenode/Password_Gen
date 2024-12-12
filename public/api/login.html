@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link href="./output.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <form id="login" method="POST">
+    <div class="flex bg-green-800 h-64 items-center px-4">
+      <div>
+        <a href="javascript: history.go(-1)">
+          <svg class="absolute top-0 my-3" xmlns="http://www.w3.org/2000/svg" height="22" width="20.5" viewBox="0 0 448 512"><path fill="#fff" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+        </a>
+        <div >
+          <h3 class="text-white mt-28 font-bold text-3xl">Sign In</h3>
+          <p class="text-gray-200">Sign in to your account</p>
+
+        </div>
+
+      </div>
+      
+    </div> 
+
+    <div class="my-16 space-y-8">
+      <div class=" mx-5">
+        <label for="username" class="block text-md font-medium leading-6 text-gray-900">Email</label>
+        <div class="relative mt-2 rounded-md shadow-sm">
+          <input type="text" name="email" id="email" class="block w-full rounded-md border-0 py-3 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Email">
+        </div>
+
+      </div>
+
+      </div>
+
+      <div class="mx-5">
+        <label for="username" class="block text-md font-medium leading-6 text-gray-900">Password</label>
+        <div class="relative mt-2 rounded-md shadow-sm">
+          <input type="text" name="price" id="price" class="block w-full rounded-md border-0 py-3 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Username">
+        </div>
+
+        <div class="my-7 flex">
+          <button type="submit" class="text-center w-full text-xl bg-lime-200 px-14 py-3 mx-auto font-mono font-extrabold rounded-lg">Log In</button>
+        </div>
+      </div>
+
+      <p><a href="./forgot.html">Forgot Password?</a></p>
+
+      
+    </div>
+    
+  </form>
+  <script src="/app.js"></script>
+  <script>
+   document.getElementById('login').addEventListener('submit', async (e) => {
+      e.preventDefault(); // Prevent the default form submission behavior
+
+      // Collect user data from form fields
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      // Send the collected data to the backend
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      // Handle the response
+      if (response.status === 200) { // 200 is a typical status code for successful requests
+        alert('Login successful');
+        // Optionally redirect or clear form
+      } else {
+        alert(`Error: ${data.error}`);
+      }
+    });
+  </script>
+
+</body>
+</html>
+
+<!-- Olatunji Funmi -->
